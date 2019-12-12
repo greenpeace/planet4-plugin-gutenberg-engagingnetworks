@@ -65,8 +65,6 @@ class Enform_Fields_List_Table extends \WP_List_Table {
 			}
 		}
 
-		print_r($supporter_fields);
-
 		$columns = $this->get_columns();
 
 		$hidden                = [];
