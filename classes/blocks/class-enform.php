@@ -10,6 +10,8 @@ namespace P4GEN\Blocks;
 use P4GEN\Views\View;
 use P4GEN\Controllers\Ensapi_Controller as Ensapi;
 
+use WP_Block_Type_Registry;
+
 /**
  * Class ENForm
  *
@@ -56,96 +58,98 @@ class ENForm extends Base_Block {
 
 		add_shortcode( 'shortcake_enblock', [ $this, 'add_block_shortcode' ] );
 
-		register_block_type(
-			'planet4-blocks/enform',
-			[
-				'render_callback' => [ $this, 'render' ],
-				'attributes'      => [
-					'en_page_id'                    => [
-						'type'    => 'integer',
-						'default' => 0,
+		if ( ! WP_Block_Type_Registry::get_instance()->is_registered( 'planet4-blocks/enform' ) ) {
+			register_block_type(
+				'planet4-blocks/enform',
+				[
+					'render_callback' => [ $this, 'render' ],
+					'attributes'      => [
+						'en_page_id'                    => [
+							'type'    => 'integer',
+							'default' => 0,
+						],
+						'enform_goal'                   => [
+							'type'    => 'string',
+							'default' => '',
+						],
+						'en_form_style'                 => [
+							'type'    => 'string',
+							'default' => 'fullwidth',
+						],
+						'enform_style'                  => [
+							'type'    => 'string',
+							'default' => '',
+						],
+						'title'                         => [
+							'type'    => 'string',
+							'default' => '',
+						],
+						'description'                   => [
+							'type'    => 'string',
+							'default' => '',
+						],
+						'campaign_logo'                 => [
+							'type' => 'boolean',
+						],
+						'content_title'                 => [
+							'type'    => 'string',
+							'default' => '',
+						],
+						'content_title_size'            => [
+							'type'    => 'string',
+							'default' => 'h1',
+						],
+						'content_description'           => [
+							'type'    => 'string',
+							'default' => '',
+						],
+						'button_text'                   => [
+							'type'    => 'string',
+							'default' => '',
+						],
+						'text_below_button'             => [
+							'type'    => 'string',
+							'default' => '',
+						],
+						'thankyou_title'                => [
+							'type'    => 'string',
+							'default' => '',
+						],
+						'thankyou_subtitle'             => [
+							'type'    => 'string',
+							'default' => '',
+						],
+						'thankyou_donate_message'       => [
+							'type'    => 'string',
+							'default' => '',
+						],
+						'thankyou_social_media_message' => [
+							'type'    => 'string',
+							'default' => '',
+						],
+						'donate_button_checkbox'        => [
+							'type' => 'boolean',
+						],
+						'thankyou_url'                  => [
+							'type'    => 'string',
+							'default' => '',
+						],
+						'custom_donate_url'             => [
+							'type'    => 'string',
+							'default' => '',
+						],
+						'background'                    => [
+							'type'    => 'integer',
+							'default' => 0,
+						],
+						'en_form_id'                    => [
+							'type'    => 'integer',
+							'default' => 0,
+						],
 					],
-					'enform_goal'                   => [
-						'type'    => 'string',
-						'default' => '',
-					],
-					'en_form_style'                 => [
-						'type'    => 'string',
-						'default' => 'fullwidth',
-					],
-					'enform_style'                  => [
-						'type'    => 'string',
-						'default' => '',
-					],
-					'title'                         => [
-						'type'    => 'string',
-						'default' => '',
-					],
-					'description'                   => [
-						'type'    => 'string',
-						'default' => '',
-					],
-					'campaign_logo'                 => [
-						'type' => 'boolean',
-					],
-					'content_title'                 => [
-						'type'    => 'string',
-						'default' => '',
-					],
-					'content_title_size'            => [
-						'type'    => 'string',
-						'default' => 'h1',
-					],
-					'content_description'           => [
-						'type'    => 'string',
-						'default' => '',
-					],
-					'button_text'                   => [
-						'type'    => 'string',
-						'default' => '',
-					],
-					'text_below_button'             => [
-						'type'    => 'string',
-						'default' => '',
-					],
-					'thankyou_title'                => [
-						'type'    => 'string',
-						'default' => '',
-					],
-					'thankyou_subtitle'             => [
-						'type'    => 'string',
-						'default' => '',
-					],
-					'thankyou_donate_message'       => [
-						'type'    => 'string',
-						'default' => '',
-					],
-					'thankyou_social_media_message' => [
-						'type'    => 'string',
-						'default' => '',
-					],
-					'donate_button_checkbox'        => [
-						'type' => 'boolean',
-					],
-					'thankyou_url'                  => [
-						'type'    => 'string',
-						'default' => '',
-					],
-					'custom_donate_url'             => [
-						'type'    => 'string',
-						'default' => '',
-					],
-					'background'                    => [
-						'type'    => 'integer',
-						'default' => 0,
-					],
-					'en_form_id'                    => [
-						'type'    => 'integer',
-						'default' => 0,
-					],
-				],
-			]
-		);
+				]
+			);
+		}
 
 		add_action( 'wp_ajax_get_en_session_token', [ $this, 'get_session_token' ] );
 		add_action( 'wp_ajax_nopriv_get_en_session_token', [ $this, 'get_session_token' ] );
